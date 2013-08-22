@@ -1,0 +1,17 @@
+&lt;?php
+/**
+ * Base model for the @{table}@ table
+ * This class was automatically generated from the database. Instead of
+ * modifying it directly, extend it to add new functionality.
+ */
+class BaseModel_@{class}@ extends Dbi_Model {
+	public function __construct() {
+		parent::__construct();
+		$this->name = '@{table}@';
+		$this->prefix = @{prefix}@;
+		<pm:loop name="columns">$this->addField('@{name}@', new Dbi_Field('@{type}@', array(<pm:loop name="arguments" as="i v" delimiter=", ">'@{addslashes(v)}@'</pm:loop>), '@{defaultValue}@', @{allowNull ? 'true' : 'false'}@));
+		</pm:loop><pm:loop name="indexes"><pm:if expr="loop_index &gt; 0">	</pm:if>$this->addIndex('@{name}@', array(
+			<pm:loop name="columns" delimiter=", ">'@{name}@'</pm:loop>
+		), '@{unique ? 'unique' : ''}@');
+	</pm:loop>}
+}

@@ -1,0 +1,36 @@
+<pm:template><![CDATA[<pm:html xmlns:pm="http://castwide.com/pagemill">
+	<pm:head>
+		<title>#{'typef_title'}# - @{modelnick}@ Administration</title>
+	</pm:head>
+	<pm:body>
+		<pm:header>@{model}@s</pm:header>
+		<div id="news">
+			<h3>Current @{modelnick}@s</h3>
+			<p><a href="#{'typef_app_dir'}#/add">Add @{modelnick}@</a></p>
+			<pm:if expr="count(@{model}@s)">
+				<pm:include template="/pagination.inc.html" />
+				<table>]]>
+					<tr>
+						<pm:loop name="fields" as="field value"><th>@{field}@</th></pm:loop>
+					</tr>
+					<![CDATA[<pm:loop name="@{model}@s" as="@{model}@">
+						<tr>]]>
+							<pm:loop name="fields" as="field value"><td>#{model . '->' . field}#</td>
+							</pm:loop>
+							<![CDATA[<td class="toolbar">
+								<a href="#{'typef_app_dir'}#/edit?@{primarykey}@=#{model . '->' . primarykey}#"><img src="#{'skin_path(\'/buttons/edit.png\')'}#" alt="Edit" title="Edit" /></a>
+									<pm:postlink href="@{typef_app_dir}@/delete?@{primarykey}@=#{model . '->' . primarykey}#" confirm="Are you sure you want to delete @{modelnick}@ ##{model . '->' . primarykey}#?  Click OK to confirm.">
+										<img src="#{'skin_path(\'/buttons/delete.png\')'}#" alt="Delete" title="Delete" />
+									</pm:postlink>
+							</td>
+						</tr>
+					</pm:loop>
+				</table>
+				<pm:include template="/pagination.inc.html" />
+			</pm:if>
+			<pm:else>
+				<p>There are no @{modelnick}@s in the database.</p>
+			</pm:else>
+		</div>
+	</pm:body>
+</pm:html>]]></pm:template>

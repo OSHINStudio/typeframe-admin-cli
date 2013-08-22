@@ -1,0 +1,13 @@
+<pm:template><![CDATA[<pm:loop name="errors" as="error"><p class="error">#{'error'}#</p></pm:loop>]]>
+<form action="#{'typef_request_path'}#" method="post" enctype="multipart/form-data">
+	<pm:if expr="@{primarykey}@"><input type="hidden" name="@{primarykey}@" value="#{primarykey}#" /></pm:if>
+	<table class="fieldset">
+		<pm:loop name="fields" as="field value"><pm:if expr="value->type != 'hidden'"><tr>
+			<td><pm:if expr="value->type =='model'">@{value->nickname}@</pm:if><pm:else>@{field}@</pm:else></td>
+			<td>
+				<pm:if expr="value->type =='textarea'"><textarea name="@{field}@">#{field}#</textarea></pm:if><pm:if expr="value->type =='text'"><input type="text" name="@{field}@" value="#{field}#" /></pm:if><pm:if expr="value->type =='calendar'"><![CDATA[<pm:calendar showtime="true" name="@{field}@" value="#{field}#" />]]></pm:if><pm:if expr="value->type == 'model'"><![CDATA[<pm:select name="@{field}@" selected="#{field}#">@{"\n"}@@{"\t\t\t\t\t"}@<pm:loop name="@{value->model}@s" as="@{value->model}@">@{"\n\t\t\t\t\t\t"}@<option value="#{value->model . '->' . field'}#">#{value->model . '->' . value->label}#</option>@{"\n\t\t\t\t\t"}@</pm:loop>@{"\n\t\t\t\t"}@</pm:select>]]></pm:if>
+			</td>
+		</tr></pm:if></pm:loop>
+	</table>
+	<input type="submit" name="btn" value="Save" class="submit" />
+</form></pm:template>

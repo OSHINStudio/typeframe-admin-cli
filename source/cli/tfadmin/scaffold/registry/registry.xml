@@ -1,0 +1,4 @@
+<registry>
+	<application name="@{modelnick}@ Admin" title="@{applicationname}@" base="/admin/@{applicationname}@" map="hard" category="Manage">
+	</application>
+</registry>
